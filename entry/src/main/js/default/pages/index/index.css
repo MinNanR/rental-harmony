@@ -1,0 +1,90 @@
+.container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 40px;
+    color: #000000;
+    opacity: 0.9;
+}
+
+@media screen and (device-type: tablet) and (orientation: landscape) {
+    .title {
+        font-size: 100px;
+    }
+}
+
+@media screen and (device-type: wearable) {
+    .title {
+        font-size: 28px;
+        color: #FFFFFF;
+    }
+}
+
+@media screen and (device-type: tv) {
+    .container {
+        background-image: url("../../common/images/Wallpaper.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .title {
+        font-size: 100px;
+        color: #FFFFFF;
+    }
+}
+
+@media screen and (device-type: phone) and (orientation: landscape) {
+    .title {
+        font-size: 60px;
+    }
+}
+
+.tab-text {
+    font-size: 20px;
+    text-align: center;
+}
+
+.tab-selected-text{
+    font-size: 20px;
+    text-align: center;
+    color: #1c80b4;
+}
+
+
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    justify-content: space-around;
+    display: flex;
+    height: 80px;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;/*    position: relative;*/
+}
+
+.tab-icon-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.tab-title-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.tab-icon-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}

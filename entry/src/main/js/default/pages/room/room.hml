@@ -1,0 +1,26 @@
+<div class="container">
+    <list>
+        <list-item>
+            <text>
+                永泰街
+            </text>
+        </list-item>
+        <list-item>
+            <text>
+                二甲六巷
+            </text>
+        </list-item>
+    </list>
+    <text>{{ tabBarList }}</text>
+    <div class="tab-bar">
+        <div class="tab-content" for="{{ item in tabBar }}" tid="$idx" @click="navigateTo(item.selected, item.url)">
+            <div class="tab-icon-div">
+                <image if="{{ item.selected }}" src="{{ item.selectedIcon }}" class="tab-icon-img"></image>
+                <image else src="{{ item.icon }}" class="tab-icon-img"></image>
+            </div>
+            <div class="tab-title-div">
+                <text class="{{ item.selected }} ? tab-text : tab-selected-text">{{ item.title }}</text>
+            </div>
+        </div>
+    </div>
+</div>

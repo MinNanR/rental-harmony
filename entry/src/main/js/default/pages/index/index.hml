@@ -1,0 +1,19 @@
+<div class="container">
+    <text style="text-align: center;">
+        {{ $t('strings.hello') }} {{ title }}
+    </text>
+    <button value="点击" @click="clickFunc">
+
+    </button>
+    <div class="tab-bar" >
+        <div class="tab-content" for="{{item in tabBar}}" tid="$idx" @click="navigateTo(item.selected, item.url)">
+            <div class="tab-icon-div">
+                <image if="{{item.selected}}" src="{{item.selectedIcon}}" class="tab-icon-img"></image>
+                <image else src="{{item.icon}}" class="tab-icon-img"></image>
+            </div>
+            <div class="tab-title-div">
+                <text class="{{item.selected}} ? tab-text : tab-selected-text">{{item.title}}</text>
+            </div>
+        </div>
+    </div>
+</div>
