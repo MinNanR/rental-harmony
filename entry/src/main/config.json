@@ -40,6 +40,29 @@
         "label": "$string:entry_MainAbility",
         "type": "page",
         "launchType": "standard"
+      },
+      {
+        "icon": "",
+        "name": "site.minnan.rental.SecurityAbility",
+        "description": "",
+        "type": "service"
+      }
+    ],
+    "js": [
+      {
+        "pages": [
+          "pages/index/index",
+          "pages/tenant/tenant",
+          "pages/room/room",
+          "pages/utility/utility",
+          "pages/info/info",
+          "pages/login/login"
+        ],
+        "name": "default",
+        "window": {
+          "designWidth": 720,
+          "autoDesignWidth": true
+        }
       }
     ]
   }

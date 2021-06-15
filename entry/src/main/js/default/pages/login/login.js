@@ -16,6 +16,7 @@ export default {
         this.loginForm.password = e.value
     },
     login(){
+        await FeatureAbility.call()
         console.info(JSON.stringify(this.loginForm))
     }
 }
