@@ -42,9 +42,15 @@
         "launchType": "standard"
       },
       {
-        "icon": "",
         "name": "site.minnan.rental.SecurityAbility",
-        "description": "",
+        "icon": "$media:icon",
+        "description": "$string:serviceability_description",
+        "type": "service"
+      },
+      {
+        "name": "site.minnan.rental.ValidatorAbility",
+        "icon": "$media:icon",
+        "description": "$string:validatorablity_description",
         "type": "service"
       }
     ],

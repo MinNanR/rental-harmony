@@ -7,6 +7,14 @@
     {
       "name": "mainability_description",
       "value": "JS_Empty Ability"
+    },
+    {
+      "name": "serviceability_description",
+      "value": "hap sample empty service"
+    },
+    {
+      "name": "validatorablity_description",
+      "value": "hap sample empty service"
     }
   ]
 }

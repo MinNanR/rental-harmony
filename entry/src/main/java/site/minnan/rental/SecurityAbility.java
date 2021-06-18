@@ -4,48 +4,91 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import ohos.aafwk.ability.Ability;
 import ohos.aafwk.content.Intent;
-import ohos.app.Context;
 import ohos.rpc.*;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 import ohos.utils.zson.ZSONObject;
+import site.minnan.rental.dto.RequestParam;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SecurityAbility extends Ability {
-
-    private static final String BUNDLE_NAME = "site.minnan.rental.SecurityAbility";
-
-    private static final String ABILITY_NAME = "SecurityAbility";
-
-    private SecurityRemote remote;
+    private static final HiLogLabel LABEL_LOG = new HiLogLabel(3, 0xD001100, "Demo");
 
     @Override
-    protected void onStart(Intent intent) {
+    public void onStart(Intent intent) {
+        HiLog.error(LABEL_LOG, "ServiceAbility::onStart");
         super.onStart(intent);
     }
 
     @Override
-    protected IRemoteObject onConnect(Intent intent) {
+    public void onBackground() {
+        super.onBackground();
+        HiLog.info(LABEL_LOG, "ServiceAbility::onBackground");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        HiLog.info(LABEL_LOG, "ServiceAbility::onStop");
+    }
+
+    @Override
+    public void onCommand(Intent intent, boolean restart, int startId) {
+    }
+
+    private MyRemote remote = new MyRemote();
+
+
+    @Override
+    public IRemoteObject onConnect(Intent intent) {
         super.onConnect(intent);
-        Context context = getContext();
-        remote = new SecurityRemote();
         return remote.asObject();
     }
 
-    class SecurityRemote extends RemoteObject implements IRemoteObject{
-        public SecurityRemote() {
-            super("SecurityRemote");
+    @Override
+    public void onDisconnect(Intent intent) {
+    }
+
+    static class MyRemote extends RemoteObject implements IRemoteBroker {
+
+        private static final int MD5 = 1001;
+
+        private static final String SUCCESS = "000";
+
+        private static final String ERROR = "500";
+
+        public MyRemote(String descriptor) {
+            super(descriptor);
+        }
+
+        MyRemote() {
+            super("MyService_MyRemote");
         }
 
         @Override
         public boolean onRemoteRequest(int code, MessageParcel data, MessageParcel reply, MessageOption option) throws RemoteException {
-            String param = data.readString();
-            String encodePassword = SecureUtil.md5().digest(param, CharsetUtil.UTF_8).toString();
-            reply.writeString(encodePassword);
+            Map<String, Object> result = new HashMap<>();
+            if (code == MD5) {
+                String req = data.readString();
+                RequestParam requestParam = ZSONObject.stringToClass(req, RequestParam.class);
+                String encodedPassword = SecureUtil.md5(requestParam.getPassword());
+                HiLog.info(LABEL_LOG, "password----%{public}s", encodedPassword);
+                result.put("encodedPassword", encodedPassword);
+                result.put("code", SUCCESS);
+                result.put("msg", "ok");
+                reply.writeString(ZSONObject.toZSONString(result));
+            } else {
+                result.put("code", ERROR);
+                result.put("msg", "no operation found");
+            }
             return true;
         }
 
-        public IRemoteObject asObject(){
+        @Override
+        public IRemoteObject asObject() {
             return this;
         }
     }
