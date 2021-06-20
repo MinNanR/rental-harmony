@@ -7,7 +7,24 @@
       "name": "1.0.0"
     }
   },
-  "deviceConfig": {},
+  "deviceConfig": {
+    "default": {
+      "network": {
+        "cleartextTraffic": true,
+        "securityConfig": {
+          "domainSettings": {
+            "cleartextPermitted": true,
+            "domains": [
+              {
+                "subdomains": true,
+                "name": "site.minnan"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
   "module": {
     "package": "site.minnan.rental",
     "name": ".MyApplication",
@@ -56,6 +73,11 @@
     ],
     "js": [
       {
+        "name": "default",
+        "window": {
+          "designWidth": 720,
+          "autoDesignWidth": true
+        },
         "pages": [
           "pages/index/index",
           "pages/tenant/tenant",
@@ -63,12 +85,18 @@
           "pages/utility/utility",
           "pages/info/info",
           "pages/login/login"
-        ],
-        "name": "default",
-        "window": {
-          "designWidth": 720,
-          "autoDesignWidth": true
-        }
+        ]
+      }
+    ],
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO"
+      },
+      {
+        "name": "ohos.permission.SET_NETWORK_INFO"
+      },
+      {
+        "name": "ohos.permission.INTERNET"
       }
     ]
   }

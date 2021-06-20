@@ -1,5 +1,6 @@
 import tabBar from "../../common/config/tabBar.js"
 import router from '@system.router';
+import localstorage from "../../common/utils/localStorage.js"
 
 // abilityType: 0-Ability; 1-Internal Ability
 const ABILITY_TYPE_EXTERNAL = 0;
@@ -31,23 +32,29 @@ export default {
             });
         }
     },
-    clickFunc(){
-        let action = {
-            bundleName: "site.minnan.rental",
-            abilityName: "site.minnan.rental.SecurityAbility",
-            messageCode: 1001,
-            data: {
-                password: "minnan35"
-            },
-            abilityType: ABILITY_TYPE_EXTERNAL,
-        }
-        FeatureAbility.callAbility(action)
-        .then(res => {
-            console.info(res);
-        })
-        .catch(err => {
-            console.error(err)
-        })
-        //        router.push({uri:"pages/login/login"})
+    setFunc() {
+        localstorage.setStorage("key", "123123jlkasdf")
+        router.push({uri:"pages/login/login"})
+        //        let action = {
+        //            bundleName: "site.minnan.rental",
+        //            abilityName: "site.minnan.rental.SecurityAbility",
+        //            messageCode: 1001,
+        //            data: {
+        //                password: "minnan35"
+        //            },
+        //            abilityType: ABILITY_TYPE_EXTERNAL,
+        //        }
+        //        FeatureAbility.callAbility(action)
+        //        .then(res => {
+        //            console.info(res);
+        //        })
+        //        .catch(err => {
+        //            console.error(err)
+        //        })
+
+    },
+    async getFunc() {
+        let value = await localstorage.getStorage("key")
+        console.info("success to get storage ,value ===" + value)
     }
 }

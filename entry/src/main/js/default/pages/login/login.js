@@ -1,3 +1,5 @@
+import request from '../../common/utils/request.js'
+
 const ABILITY_TYPE_EXTERNAL = 0;
 const ABILITY_TYPE_INTERNAL = 1;
 const ACTION_SYNC = 0;
@@ -19,12 +21,33 @@ export default {
         console.info("password---" + e.value)
         this.loginForm.password = e.value
     },
-    async login() {
-        let passsw
-        this.buildAction(this.loginForm.password)
+    login() {
+        let action = this.buildAction(this.loginForm.password)
+        let form = {
+            name: this.loginForm.name
+        }
+        FeatureAbility.callAbility(action)
+            .then(res => {
+            let response = JSON.parse(res)
+            if (response.code === "000") {
+                let encodedPassword = response.encodedPassword
+                form.password = encodedPassword;
+                this.submitLogin(form)
+            } else {
+                Promise.reject(response.message);
+            }
+        })
         console.info(JSON.stringify(this.loginForm))
     },
-    buildAction(password){
+    submitLogin(form) {
+        console.info(JSON.stringify(form))
+        request.post("https://minnan.site:2002//auth/login/password", form)
+            .then(response => {
+            let {data, message} = response
+            console.info(JSON.stringify(data))
+        })
+    },
+    buildAction(password) {
         return {
             bundleName: "site.minnan.rental",
             abilityName: "site.minnan.rental.SecurityAbility",
@@ -35,5 +58,4 @@ export default {
             abilityType: ABILITY_TYPE_EXTERNAL,
         }
     }
-
 }

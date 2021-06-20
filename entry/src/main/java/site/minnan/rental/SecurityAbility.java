@@ -1,16 +1,15 @@
 package site.minnan.rental;
 
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import ohos.aafwk.ability.Ability;
 import ohos.aafwk.content.Intent;
-import ohos.rpc.*;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
+import ohos.rpc.*;
 import ohos.utils.zson.ZSONObject;
 import site.minnan.rental.dto.RequestParam;
+import site.minnan.rental.response.Response;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,13 +75,10 @@ public class SecurityAbility extends Ability {
                 RequestParam requestParam = ZSONObject.stringToClass(req, RequestParam.class);
                 String encodedPassword = SecureUtil.md5(requestParam.getPassword());
                 HiLog.info(LABEL_LOG, "password----%{public}s", encodedPassword);
-                result.put("encodedPassword", encodedPassword);
-                result.put("code", SUCCESS);
-                result.put("msg", "ok");
-                reply.writeString(ZSONObject.toZSONString(result));
+                Response response = Response.success().put("encodedPassword", encodedPassword);
+                reply.writeString(response.response());
             } else {
-                result.put("code", ERROR);
-                result.put("msg", "no operation found");
+                reply.writeString(Response.invalidOperation().response());
             }
             return true;
         }
