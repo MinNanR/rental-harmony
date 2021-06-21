@@ -16,13 +16,22 @@
             </div>
             <div class="form-group">
                 <input type="password" placeholder="请输入密码" headericon="/common/images/icon/password.png"
-                        @change="onPasswordChange"></input>
+                       @change="onPasswordChange"></input>
             </div>
         </div>
         <div class="login-btn-div">
             <button class="login-btn" value="登陆" @click="login">
-
             </button>
         </div>
     </div>
+    <div id="cover" style="visibility : {{ modalVisibility }};">
+
+    </div>
+    <div style="visibility : {{ modalVisibility }};" class="modal-container">
+        <div id="modal" style="flex-direction: column;">
+            <progress type="circular"></progress>
+            <text style="font-size: 20px;">登录中...</text>
+        </div>
+    </div>
+
 </div>

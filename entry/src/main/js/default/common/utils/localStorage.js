@@ -34,7 +34,7 @@ const localstorage = {
             key: key,
             value: JSON.stringify(obj),
             success() {
-                console.info("success set storage data,key = " + key)
+                console.info(`success set storage data,key = ${key}`)
             },
             fail(data, code) {
                 console.warn("fail to set storage data,code : " + code + ", data : " + data)
@@ -50,6 +50,10 @@ const localstorage = {
             key: key,
             success(data) {
                 console.info("get storage ==== " + data)
+                if(data == null || data == ''){
+                    value = null
+                    return
+                }
                 let obj = JSON.parse(data)
                 let expire = obj.expire
                 let current = new Date()
@@ -66,6 +70,11 @@ const localstorage = {
                 } else {
                     value = obj.data
                 }
+            },
+            fail(){
+                console.warn(`key ${key} not exist`)
+                value = null
+                return
             }
         })
         console.info("value====" + value)

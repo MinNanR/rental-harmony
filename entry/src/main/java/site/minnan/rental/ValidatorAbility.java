@@ -11,20 +11,20 @@ public class ValidatorAbility extends Ability {
 
     @Override
     public void onStart(Intent intent) {
-        HiLog.error(LABEL_LOG, "ValidatorAblity::onStart");
+        HiLog.error(LABEL_LOG, "ValidatorAbility::onStart");
         super.onStart(intent);
     }
 
     @Override
     public void onBackground() {
         super.onBackground();
-        HiLog.info(LABEL_LOG, "ValidatorAblity::onBackground");
+        HiLog.info(LABEL_LOG, "ValidatorAbility::onBackground");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        HiLog.info(LABEL_LOG, "ValidatorAblity::onStop");
+        HiLog.info(LABEL_LOG, "ValidatorAbility::onStop");
     }
 
     @Override

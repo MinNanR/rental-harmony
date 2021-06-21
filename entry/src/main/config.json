@@ -17,7 +17,7 @@
             "domains": [
               {
                 "subdomains": true,
-                "name": "site.minnan"
+                "name": "minnan.site"
               }
             ]
           }
@@ -79,12 +79,12 @@
           "autoDesignWidth": true
         },
         "pages": [
+          "pages/room/room",
+          "pages/login/login",
           "pages/index/index",
           "pages/tenant/tenant",
-          "pages/room/room",
           "pages/utility/utility",
-          "pages/info/info",
-          "pages/login/login"
+          "pages/info/info"
         ]
       }
     ],

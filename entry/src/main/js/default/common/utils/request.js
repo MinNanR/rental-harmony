@@ -3,6 +3,7 @@ import localstorage from "./localStorage.js"
 import prompt from '@system.prompt';
 import router from '@system.router';
 
+const baseUrl = "https://minnan.site:2002/rental"
 
 const request = {
     post: async function (url, param) {
@@ -10,23 +11,28 @@ const request = {
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
-        let token = await localstorage.getStorage("token")
+//        let token = await localstorage.getStorage("token")
+        let token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyZWFsTmFtZSI6IuawkemaviIsInN1YiI6Im1pbiIsInN0YW1wIjoiZGE3NWE4ZTUyY2UwNGNjZWIzMTdhODVkMTVkNjUyZGIiLCJpZCI6MSwiZXhwIjoxNjI0ODczOTQxLCJpYXQiOjE2MjQyNjkxNDF9.UCONq_pbWs84xrdOLUIdAQN3v2jg5PDFc5A3ExDfdFmIQrBRm9D12WBBspSfD_9l9ItscaDVQx0shFf0pqfHcQ'
         if (token != null) {
             header.Authorization = token
         }
         return new Promise((resolve, reject) => {
             fetch.fetch({
-                url: url,
+                url: `${baseUrl}${url}`,
                 header: header,
                 data: param,
                 method: "POST",
                 responseType: "json",
                 success: (response) => {
+                    console.info("data === " + response.data)
                     if (response.code === 200) {
-                        if (response.headers.newToken != null) {
-                            localstorage.setStorageExpire(token, `Bearer ${response.headers.newToken}`, 7 * 24 * 60 * 60 * 1000)
+                        //headers为字符串，存在null:["HTTP/1.1 200 "]，导致无法进行JSON解析，这里先删除这个请求头
+                        let headersString = response.headers.replace("null:[\"HTTP/1.1 200 \"]", "\"null\":[\"HTTP/1.1 200 \"]")
+                        let headers = JSON.parse(headersString)
+                        if (headers.newToken != null) {
+                            localstorage.setStorageExpire("token", `Bearer ${headers.newToken}`, 7 * 24 * 60 * 60 * 1000)
                         }
-                        let data = response.data
+                        let data = JSON.parse(response.data)
                         if (data.code === '000') {
                             resolve(data)
                         } else {
@@ -53,8 +59,16 @@ const request = {
                         return reject(response)
                     }
                 },
-                fail: () => {
-                    return reject()
+                fail(err) {
+                    if(err != null || err != undefined){
+                        console.error(`request error : ${JSON.stringify(err)}`)
+                    }else{
+                        console.error("request error")
+                    }
+                    return reject(err)
+                },
+                complete() {
+                    console.info("request complete")
                 }
             })
         })
