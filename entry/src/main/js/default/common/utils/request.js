@@ -24,7 +24,6 @@ const request = {
                 method: "POST",
                 responseType: "json",
                 success: (response) => {
-                    console.info("data === " + response.data)
                     if (response.code === 200) {
                         //headers为字符串，存在null:["HTTP/1.1 200 "]，导致无法进行JSON解析，这里先删除这个请求头
                         let headersString = response.headers.replace("null:[\"HTTP/1.1 200 \"]", "\"null\":[\"HTTP/1.1 200 \"]")
@@ -68,7 +67,7 @@ const request = {
                     return reject(err)
                 },
                 complete() {
-                    console.info("request complete")
+                    console.info(`request ${baseUrl}${url} complete`)
                 }
             })
         })

@@ -6,10 +6,10 @@ export default {
     data: {
         title: 'room',
         houseList: [],
-        showLoading: "hidden",
-        isRefreshing:false,
-//        refreshHeight: "0px",
-        time:""
+        isRefreshing: false,
+        loading: false,
+    //        refreshHeight: "0px",
+        time: ""
     },
     onInit() {
         const tabBarList = tabBar.tabBar;
@@ -27,12 +27,11 @@ export default {
         this.getHouseList()
     },
     getHouseList() {
-        this.showLoading = "visible"
         request.post("/house/getHouseDropDown", {})
             .then(response => {
             let {data} = response
             setTimeout(() => {
-                this.showLoading = "hidden"
+                this.isRefreshing = false
                 this.houseList = data
             }, 200)
         })
@@ -40,14 +39,26 @@ export default {
             console.error(err)
         })
     },
-    onRefresh(){
-        let date = new Date();
-        this.time = date.toLocaleTimeString()
-        this.showLoading = "visible"
-        setTimeout(() => {
-            this.showLoading = "hidden"
-//            this.refreshHeight = "0px";
-            console.info(`isRefreshing === ${this.isRefreshing}`)
-        }, 3000)
+
+    onRefresh(e) {
+        /**
+         * 下拉框刷新的过程：
+         * 1.触发pulldown事件，state='start'，在这里要修改组件的刷新状态为true
+         * 2.当组件的刷新状态修改后会触发refresh事件，refreshing=true，在这里判断是否正在请求数据(loading标记量）如果为false则修改loading标记量为true并请求数据
+         * 3.在请求方法回调内修改组件刷新状态为false，然后会触发refresh事件，refreshing=false,
+         * 4.触发pulldown事件，state='end'
+         */
+        if (!this.loading) {
+            this.loading = true
+            this.getHouseList()
+        }
+    },
+    onPullDown(e) {
+        let state = e.state
+        if (state === 'start') {
+            this.isRefreshing = true
+        } else if (state === 'end') {
+            this.loading = false
+        }
     }
 }

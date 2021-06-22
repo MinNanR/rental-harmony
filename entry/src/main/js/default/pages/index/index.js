@@ -1,6 +1,7 @@
 import tabBar from "../../common/config/tabBar.js"
 import router from '@system.router';
 import localstorage from "../../common/utils/localStorage.js"
+import request from "../../common/utils/request.js";
 
 // abilityType: 0-Ability; 1-Internal Ability
 const ABILITY_TYPE_EXTERNAL = 0;
@@ -13,7 +14,8 @@ const ACTION_MESSAGE_CODE_PLUS = 1001;
 export default {
     data: {
         title: "",
-        tabBar: []
+        tabBar: [],
+        totalList: []
     },
     onInit() {
         this.title = this.$t('strings.world');
@@ -22,7 +24,7 @@ export default {
         this.$set("tabBar", tabBarList);
     },
     onShow() {
-        //        router.push({uri:"pages/login/login"})
+        this.getTotalV2()
     },
     navigateTo(selected, url) {
         console.info(url)
@@ -34,7 +36,9 @@ export default {
     },
     setFunc() {
         localstorage.setStorage("key", "123123jlkasdf")
-        router.push({uri:"pages/login/login"})
+        router.push({
+            uri: "pages/login/login"
+        })
         //        let action = {
         //            bundleName: "site.minnan.rental",
         //            abilityName: "site.minnan.rental.SecurityAbility",
@@ -56,5 +60,11 @@ export default {
     async getFunc() {
         let value = await localstorage.getStorage("key")
         console.info("success to get storage ,value ===" + value)
+    },
+    getTotalV2(){
+        request.post("/bill/getMonthTotal/v2").then(response => {
+            let {data} = response
+            this.totalList = data
+        })
     }
 }

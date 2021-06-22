@@ -1,12 +1,11 @@
 <div class="container" style="background-color : #f5f5f5;">
-    <refresh type="auto" onrefresh="onRefresh" style="visibility: {{showLoading}};">
-        <text>{{time}}</text>
+    <refresh offset="50" refreshing="{{isRefreshing}}" type="auto" on:pulldown="onPullDown" on:refresh="onRefresh">
+        <list>
+            <list-item for="{{ item in houseList }}" tid="$idx" class="list-item">
+                <text>{{ item.houseName }}</text>
+            </list-item>
+        </list>
     </refresh>
-    <list>
-        <list-item for="{{ item in houseList }}" tid="$idx" class="list-item">
-            <text>{{ item.houseName }}</text>
-        </list-item>
-    </list>
     <div class="tab-bar">
         <div class="tab-content" for="{{ item in tabBar }}" tid="$idx" @click="navigateTo(item.selected, item.url)">
             <div class="tab-icon-div">

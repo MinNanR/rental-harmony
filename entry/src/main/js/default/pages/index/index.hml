@@ -1,19 +1,36 @@
 <div class="container">
-    <text style="text-align: center;">
-        {{ $t('strings.hello') }} {{ title }}
-    </text>
-    <button style="width: 300px;height: 50px;" value="登录页面" @click="setFunc">
-    </button>
-    <button style="width: 300px;height: 50px;" value="获取值" @click="getFunc">
-    </button>
-    <div class="tab-bar" >
-        <div class="tab-content" for="{{item in tabBar}}" tid="$idx" @click="navigateTo(item.selected, item.url)">
+    <div style="width : 720px;">
+        <div class="grid-row">
+            <div for="{{ house in totalList }}" class="grid-col">
+                <text style="font-size : 22px; margin : 5px;text-overflow: ellipsis;text-align: center;">{{ house.houseName }}</text>
+                <text style="font-size : 18px; margin : 5px;text-align: center;">￥{{ house.monthTotal }}</text>
+            </div>
+        </div>
+    </div>
+    <div>
+        <tabs>
+            <tab-bar style="justify-content : space-between;">
+                <text>未缴房租</text>
+                <text>未确认账单</text>
+            </tab-bar>
+            <tab-content>
+                <div>
+                    <text>未缴房租</text>
+                </div>
+                <div>
+                    <text>未确认</text>
+                </div>
+            </tab-content>
+        </tabs>
+    </div>
+    <div class="tab-bar">
+        <div class="tab-content" for="{{ item in tabBar }}" tid="$idx" @click="navigateTo(item.selected, item.url)">
             <div class="tab-icon-div">
-                <image if="{{item.selected}}" src="{{item.selectedIcon}}" class="tab-icon-img"></image>
-                <image else src="{{item.icon}}" class="tab-icon-img"></image>
+                <image if="{{ item.selected }}" src="{{ item.selectedIcon }}" class="tab-icon-img"></image>
+                <image else src="{{ item.icon }}" class="tab-icon-img"></image>
             </div>
             <div class="tab-title-div">
-                <text class="{{item.selected}} ? tab-text : tab-selected-text">{{item.title}}</text>
+                <text class="{{ item.selected }} ? tab-text : tab-selected-text">{{ item.title }}</text>
             </div>
         </div>
     </div>

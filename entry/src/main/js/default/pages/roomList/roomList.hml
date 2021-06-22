@@ -1,0 +1,24 @@
+<div class="container">
+    <div style="height : 70px;">
+        <text>搜索区域</text>
+    </div>
+    <div>
+        <list class="floor-list-container">
+            <list-item for="{{ (index, floor) in list }}" tid="$idx" class="floor-item"
+                       style="background-color : {{ index == tabCur ? '#f1f1f1' : '#ffffff' }};"
+                       @click="onIndexClick(index)" @focus="onFocus">
+                <text>{{ floor.floor }}楼</text>
+            </list-item>
+        </list>
+        <list class="room-list-container">
+            <block for="{{ (index, floor) in list }}">
+                <list-item>
+                    <text>{{ floor.floor }}楼</text>
+                </list-item>
+                <list-item for="{{ (index, room) in floor.roomList }}">
+                    <text>{{ room.roomNumber }}</text>
+                </list-item>
+            </block>
+        </list>
+    </div>
+</div>

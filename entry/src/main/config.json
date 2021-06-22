@@ -79,9 +79,10 @@
           "autoDesignWidth": true
         },
         "pages": [
+          "pages/roomList/roomList",
+          "pages/index/index",
           "pages/room/room",
           "pages/login/login",
-          "pages/index/index",
           "pages/tenant/tenant",
           "pages/utility/utility",
           "pages/info/info"

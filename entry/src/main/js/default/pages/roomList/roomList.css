@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    left: 0px;
+    top: 0px;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.title {
+    font-size: 30px;
+    text-align: center;
+    width: 200px;
+    height: 100px;
+}
+
+.floor-list-container{
+    width: 100px;
+}
+
+.floor-item{
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100px;
+}
+
+.room-list-container{
+    width: 620px;
+}
