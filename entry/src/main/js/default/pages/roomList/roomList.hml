@@ -6,17 +6,32 @@
         <list class="floor-list-container">
             <list-item for="{{ (index, floor) in list }}" tid="$idx" class="floor-item"
                        style="background-color : {{ index == tabCur ? '#f1f1f1' : '#ffffff' }};"
-                       @click="onIndexClick(index)" @focus="onFocus">
-                <text>{{ floor.floor }}楼</text>
+                       @click="onIndexClick(index)">
+                <text class="font-size-26">{{ floor.floor }}楼</text>
             </list-item>
         </list>
-        <list class="room-list-container">
+        <list class="room-list-container" id="list" @scroll="onScrollEnd">
             <block for="{{ (index, floor) in list }}">
-                <list-item>
-                    <text>{{ floor.floor }}楼</text>
+                <list-item class="room-item-bar">
+                    <div style="width : 14px; height : 14px; border-radius : 7px; background-color : #0081ff;
+                            margin-right : 5px;"></div>
+                    <text class="font-size-26">{{ floor.floor }}楼</text>
                 </list-item>
-                <list-item for="{{ (index, room) in floor.roomList }}">
-                    <text>{{ room.roomNumber }}</text>
+                <list-item for="{{ (index, room) in floor.roomList }}" class="room-item">
+                    <div class="room-icon-div"
+                         style="background-color : {{ room.statusCode === 'ON_RENT' ? '#08ce65' : '#8799a3' }};">
+                        <image src="/common/images/room.png" style="margin : 10px; object-fit : contain;"></image>
+                    </div>
+                    <div class="room-content">
+                        <text class="font-size-24">{{ room.roomNumber }}</text>
+                        <text class="font-size-18">水：{{ room.water }}度</text>
+                        <text class="font-size-18">电：{{ room.electricity }}度</text>
+                    </div>
+                    <div class="room-action-div">
+                        <image src="/common/images/right.png"
+                               style="height : 30px; width : 30px; object-fit : fill;">
+                        </image>
+                    </div>
                 </list-item>
             </block>
         </list>

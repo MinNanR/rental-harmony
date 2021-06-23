@@ -1,3 +1,5 @@
+@import "../../common/common.css";
+
 .container {
     display: flex;
     left: 0px;
@@ -13,17 +15,61 @@
     height: 100px;
 }
 
-.floor-list-container{
-    width: 100px;
+.floor-list-container {
+    width: 150px;
 }
 
-.floor-item{
+.floor-item {
     align-items: center;
     justify-content: center;
     height: 50px;
-    width: 100px;
+    width: 150px;
+    padding: 5px;
 }
 
-.room-list-container{
-    width: 620px;
+.room-list-container {
+    width: 570px;
+}
+
+.room-item-bar {
+    width: 570px;
+    height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid;
+    align-items: center;
+    background-color: white;
+}
+
+.room-item {
+    width: 570px;
+    height: 90px;
+    padding: 5px;
+    border-bottom: 1px solid;
+    align-items: center;
+    background-color: white;
+}
+
+.room-icon-div{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+.room-icon-image{
+    width: 40px;
+    height: 40px;
+    object-fit: fill;
+}
+
+.room-content{
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.room-action-div{
+    width: 40px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
 }

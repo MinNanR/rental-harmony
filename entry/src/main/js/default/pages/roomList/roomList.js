@@ -423,12 +423,70 @@ export default {
                 ]
             }
         ],
-        tabCur:0
+        tabCur: 0
     },
-    onIndexClick(index){
+    onIndexClick(index) {
         this.tabCur = index
+        let floor = this.list[index]
+        let roomListDOM = this.$element("list")
+        roomListDOM.scrollTo({
+            index: floor.index
+        })
     },
-    onFocus(index){
-        console.info(`item[${index}] get foucused`)
+    onShow() {
+        this.calculate()
+    },
+    calculate() {
+        let index = 0
+        let height = 0
+        let barHeight = 60
+        let itemHeight = 90
+        this.list.forEach(floor => {
+            let roomList = floor.roomList
+            floor.index = index
+            index++
+            floor.top = height
+            floor.height = barHeight
+            height += barHeight
+            roomList.forEach(room => {
+                height = height + itemHeight
+                room.index = index
+                index++
+            })
+            floor.bottom = height
+        })
+    },
+    onScrollEnd(event) {
+        let y = event.scrollY
+        let state = event.scrollState
+        if (state !== 0) {
+            return
+        }
+        //用户滑动停止时计算
+        y = y + 10
+        console.info(JSON.stringify(event))
+        for (let i = 0; i < this.list.length; i++) {
+            if (y > this.list[i].top && y < this.list[i].bottom) {
+                this.tabCur = i
+                return
+            }
+        }
+    },
+    clickFunc() {
+        try {
+            let ref = this.$element("list")
+            console.info(ref)
+            let btn = this.$refs.btn
+            let attr = btn.attr
+            for (let a in attr) {
+                console.info(`${a}=${attr[a]}`)
+            }
+            ref.scrollTo({
+                index: 20
+            })
+        } catch (err) {
+            console.error(err)
+        }
+
     }
 }
