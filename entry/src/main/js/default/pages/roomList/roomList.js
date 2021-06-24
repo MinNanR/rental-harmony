@@ -423,7 +423,8 @@ export default {
                 ]
             }
         ],
-        tabCur: 0
+        tabCur: 0,
+        curHeight: 0
     },
     onIndexClick(index) {
         this.tabCur = index
@@ -432,6 +433,7 @@ export default {
         roomListDOM.scrollTo({
             index: floor.index
         })
+        this.curHeight = floor.height
     },
     onShow() {
         this.calculate()
@@ -457,16 +459,21 @@ export default {
         })
     },
     onScrollEnd(event) {
+        let info = {
+            state : event.scrollState,
+            y: event.scrollY
+        }
+        console.info(JSON.stringify(info))
         let y = event.scrollY
         let state = event.scrollState
         if (state !== 0) {
+            this.curHeight += y
             return
         }
         //用户滑动停止时计算
-        y = y + 10
-        console.info(JSON.stringify(event))
+        let h = this.curHeight + 10
         for (let i = 0; i < this.list.length; i++) {
-            if (y > this.list[i].top && y < this.list[i].bottom) {
+            if (h > this.list[i].top && h < this.list[i].bottom) {
                 this.tabCur = i
                 return
             }
